@@ -1,0 +1,1 @@
+# T-SQL-ile-XML-Parse--lemi-Nas-l-Yap-l-r

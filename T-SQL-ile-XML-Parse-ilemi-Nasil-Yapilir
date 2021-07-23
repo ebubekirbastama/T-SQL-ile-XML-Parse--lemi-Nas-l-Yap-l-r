@@ -1,0 +1,27 @@
+-- www.ebubekirbastama.com
+-- www.twitter.com/ebubekirstt
+
+--drop table #result
+
+DECLARE @xml varchar(max);
+DECLARE @idoc int;
+
+SET @xml =(
+'<?xml version="1.0" encoding="utf-8"?>
+<ROOT>
+<Ogrenci recid="0" gsmno="05554128854" />
+<Ogrenci recid="12" gsmno="0555222288885555" />
+</ROOT>'
+);
+
+EXEC sp_xml_preparedocument @idoc OUTPUT, @xml;
+
+SELECT id as OgrenciNo, gsmno as [GSM No] INTO #RESULT FROM OPENXML (@idoc,'/ROOT/Ogrenci') WITH
+( 
+gsmno varchar(50)'@gsmno',
+id bigint '@recid'
+);
+
+select * from #RESULT
+EXEC sp_xml_removedocument @idoc;
+
